@@ -42,5 +42,12 @@ async def profile(tg_id: int):
   return {'completedTasks': completed_tasks_count}
 
 @app.post("/api/add")
-async def add_task:
-  pass
+async def add_task(task: AddTask):
+  user = await rq.add_user(task.tg_id)
+  await rq.add_user(user.id, task.title)
+  return {'status': 'ok'}
+
+@app.patch("/api/completed")
+async def completed_task(task: CompleteTask):
+  await rq.update_task(task.id)
+  return {'status': 'ok'}
