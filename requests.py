@@ -49,6 +49,6 @@ async def add_task(user_id, title):
     await session.commit()
 
 async def update_task(task_id):
-  async with async_session() as session():
+  async with async_session() as session:
     await session.execute(update(Task).where(task_id == task_id).value(completed=True))
     await session.commit()
